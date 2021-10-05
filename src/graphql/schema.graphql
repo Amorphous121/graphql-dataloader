@@ -1,0 +1,30 @@
+type Query {
+  getUsers: [User]
+  getPosts: [Post]
+}
+
+type Mutation {
+  createUser(payload: userInput): User
+  createPost(payload: postInput): Post
+}
+
+type User {
+  _id: String
+  name: String
+  posts: [Post]
+}
+
+type Post {
+  _id: String
+  title: String
+  author: User
+}
+
+input userInput {
+  name: String
+}
+
+input postInput {
+  title: String,
+  author: String
+}
