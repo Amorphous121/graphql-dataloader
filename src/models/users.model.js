@@ -8,6 +8,6 @@ const userSchema = new mongoose.Schema({
 userSchema.pre(/findOne|find/, function (next) {
   console.log("User model calling");
   next();
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('user', userSchema);  

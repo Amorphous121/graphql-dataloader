@@ -14,15 +14,16 @@ const authorLoader = new DataLoader(async (ids) => {
   return ids.map(id => authorMap[id])
 })
 
-// const postLoader = new DataLoader(async (ids) => {
-//   const posts = await PostModel.find({ _id: { $in: ids }});
-//   const postMap = {};
-//   posts.forEach(post => {
-//     postMap[post._id] = post;
-//   });
+const postLoader = new DataLoader(async (keys) => {
+  const posts = await PostModel.find({ _id: { $in: keys }});
+  const postMap = {};
+  posts.forEach(post => {
+    postMap[post._id] = post;
+  });
+  return keys.map(id => postMap[id]);
 
-//   return ids.map(id => postMap[id]);
-// })
+})
+
 
 module.exports = {
   Query: {
@@ -35,10 +36,9 @@ module.exports = {
   },
 
   User: {
-    posts: (parent, args, ctx) => {
+    posts: async (parent, args, ctx) => {
       return PostModel.find({ author: parent._id });
-      // let postIds = parent.posts.map(id => id.toString());
-      // return postLoader.load(postIds);
+      // return postLoader.loadMany(parent.posts);
     }
   },
 

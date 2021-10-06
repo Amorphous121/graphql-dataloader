@@ -8,6 +8,6 @@ const postSchema = new mongoose.Schema({
 postSchema.pre(/findOne|find/, function (next) {
   console.log("Post model calling");
   next();
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('post', postSchema);  
